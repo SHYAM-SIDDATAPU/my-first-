@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Voice Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        /* (CSS styles remain the same as your original register.html) */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #e0f0ff, #ffffff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 40px 50px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #1a73e8;
+            margin-bottom: 25px;
+        }
+
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 10px 0 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus {
+            border-color: #1a73e8;
+            box-shadow: 0 0 5px rgba(26,115,232,0.3);
+        }
+
+        button {
+            background-color: #1a73e8;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #155bb5;
+        }
+
+        /* --- NEW CSS for Speak Now Message --- */
+        .speak-now-message {
+            display: none; /* Hidden by default */
+            margin-top: 15px;
+            font-size: 1.1em;
+            color: #28a745; /* Green color */
+            font-weight: bold;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        /* --- End NEW CSS --- */
+
+        .login-link {
+            margin-top: 15px;
+            display: block;
+            color: #1a73e8;
+            text-decoration: none;
+        }
+
+        .login-link:hover {
+            text-decoration: underline;
+        }
+
+        .flash {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        .flash-success { background-color: #d4edda; color: #155724; }
+        .flash-danger { background-color: #f8d7da; color: #721c24; }
+        .flash-info { background-color: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <form id="registerForm" action="{{ url_for('register') }}" method="POST">
+            <input type="text" name="name" placeholder="Full Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <button type="submit" id="submitButton">Register Voice</button>
+            <div id="speakNow" class="speak-now-message">
+                🎙 **Listening... Please Speak Now!** 🎙
+            </div>
+        </form>
+        <a class="login-link" href="{{ url_for('login') }}">Already have an account? Login</a>
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            const button = document.getElementById('submitButton');
+            const speakNow = document.getElementById('speakNow');
+            
+            // 1. Disable the button to prevent double-submission
+            button.disabled = true;
+            
+            // 2. Change the button text
+            button.textContent = 'Processing... Please wait';
+            button.style.backgroundColor = '#ffc107'; // Optional: change color to amber
+            
+            // 3. Display the "Speak Now" message
+            speakNow.style.display = 'block';
+        });
+    </script>
+    </body>
+</html>

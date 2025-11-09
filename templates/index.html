@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>🎙 Voice Login System</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Animate.css for animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            /* White to blue gradient */
+            background: linear-gradient(to bottom, #ffffff 0%, #007bff 100%);
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            min-height: 100vh;
+        }
+        h1 {
+            margin-top: 80px;
+            color: #333;
+            font-size: 3rem;
+        }
+        nav {
+            margin: 40px 0;
+        }
+        a.button {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 0 20px;
+            font-size: 1.2rem;
+            color: #fff;
+            background: #0056b3; /* darker blue for contrast */
+            border-radius: 50px;
+            text-decoration: none;
+            transition: 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        a.button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        .message {
+            margin: 10px auto;
+            padding: 12px 20px;
+            border-radius: 8px;
+            width: 50%;
+            color: #fff;
+            font-weight: 600;
+            animation: fadeIn 1s;
+        }
+        .success { background-color: #28a745; }
+        .danger { background-color: #dc3545; }
+        .info { background-color: #17a2b8; }
+    </style>
+</head>
+<body>
+    <h1 class="animate__animated animate__fadeInDown">🎙 Voice Login System</h1>
+    <nav class="animate__animated animate__fadeInUp animate__delay-1s">
+        <a href="/register" class="button">Register</a>
+        <a href="/login" class="button">Login</a>
+    </nav>
+
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, msg in messages %}
+                {% set category_class = 'info' %}
+                {% if category == 'danger' %}
+                    {% set category_class = 'danger' %}
+                {% elif category == 'success' %}
+                    {% set category_class = 'success' %}
+                {% endif %}
+                <div class="message {{ category_class }} animate__animated animate__fadeIn">
+                    {{ msg }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+   
+
+</body>
+</html>
